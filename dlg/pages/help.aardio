@@ -1,0 +1,10 @@
+import win.ui;
+import fonts.fontAwesome;
+/*DSG{{*/
+var winform = win.form(text="wubiLex - 帮助";right=679;bottom=399;bgcolor=16777215)
+winform.add()
+/*}}*/
+
+winform.show();
+win.loopMessage();
+return winform;

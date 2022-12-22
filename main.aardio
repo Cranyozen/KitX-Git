@@ -1,8 +1,5 @@
+/*
+KitX-Git 程序入口
+*/
 import win.ui;
-/*DSG{{*/
-mainForm = win.form(text="KitX-Git";right=757;bottom=467)
-mainForm.add()
-/*}}*/
-
-mainForm.show();
-return win.loopMessage();
+win.loadForm("\dlg\main.aardio").doModal()
