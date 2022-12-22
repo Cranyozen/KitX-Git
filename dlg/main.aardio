@@ -8,7 +8,7 @@ custom={cls="custom";left=0;top=48;right=680;bottom=448;bgcolor=16777215;db=1;dl
 navFirst={cls="plus";text="主页";left=144;top=8;right=232;bottom=48;align="left";color=16777215;dl=1;dt=1;font=LOGFONT(h=-16);iconStyle={align="left";font=LOGFONT(h=-19;name='FontAwesome');padding={left=12;top=4}};iconText='\uF00A';notify=1;paddingLeft=1;paddingRight=1;paddingTop=3;textPadding={left=39;bottom=1};x=0.5;y=0.2;z=3};
 navHelp={cls="plus";text="帮助";left=368;top=8;right=456;bottom=48;align="left";color=16777215;dl=1;dt=1;font=LOGFONT(h=-16);iconStyle={align="left";font=LOGFONT(h=-19;name='FontAwesome');padding={left=12;top=4}};iconText='\uF06A';notify=1;paddingLeft=1;paddingRight=1;paddingTop=3;textPadding={left=39;bottom=1};x=0.5;y=0.2;z=6};
 navSetting={cls="plus";text="设置";left=256;top=8;right=344;bottom=48;align="left";color=16777215;dl=1;dt=1;font=LOGFONT(h=-16);iconStyle={align="left";font=LOGFONT(h=-19;name='FontAwesome');padding={left=12;top=4}};iconText='\uF0AD';notify=1;paddingLeft=1;paddingRight=1;paddingTop=3;textPadding={left=39;bottom=1};x=0.5;y=0.2;z=5};
-plus={cls="plus";left=8;top=8;right=40;bottom=40;background="\icon.png";notify=1;z=7};
+plus={cls="plus";left=8;top=8;right=40;bottom=40;background="\icon.ico";notify=1;z=7};
 titleBar={cls="bkplus";left=0;top=0;right=680;bottom=48;bgcolor=7105791;dl=1;dr=1;dt=1;z=2}
 )
 /*}}*/
