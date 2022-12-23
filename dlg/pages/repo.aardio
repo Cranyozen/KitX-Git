@@ -1,0 +1,40 @@
+import fonts.fontAwesome;
+import win.ui;
+import fsys.config;
+import thread;
+/*DSG{{*/
+var winform = win.form(text="Repo";right=679;bottom=399;bgcolor=16777215)
+winform.add(
+lbTip={cls="static";left=63;top=523;right=695;bottom=572;db=1;dl=1;dr=1;transparent=1;z=1};
+table={cls="listview";left=0;top=0;right=680;bottom=400;db=1;dl=1;dr=1;dt=1;edge=1;gridLines=1;msel=false;vscroll=1;z=2}
+)
+/*}}*/
+
+// 样式
+import style;
+//winform.btnTest.skin(style.primaryButton);
+
+// 配置文件
+config  = fsys.config("/.kitx-git/config/");
+
+
+//winform.table
+winform.table.insertColumn("", 30);
+winform.table.insertColumn("库名称", 200);
+winform.table.insertColumn("分支", 80);
+
+/*
+config.a.a = 10;
+winform.msgbox(config.a.a);
+*/
+
+/*
+thread.create(function(){
+	import win;
+	win.msgbox("a");
+});
+*/
+
+winform.show();
+win.loopMessage();
+return winform;

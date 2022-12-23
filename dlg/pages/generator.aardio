@@ -1,0 +1,12 @@
+import win.ui;
+/*DSG{{*/
+var winform = win.form(text="Generator";right=679;bottom=399;bgcolor=16777215)
+winform.add(
+combobox={cls="combobox";left=0;top=0;right=64;bottom=24;edge=1;items={};mode="dropdown";z=1};
+edit={cls="edit";text="Edit";left=64;top=0;right=680;bottom=24;edge=1;z=2}
+)
+/*}}*/
+
+winform.show();
+win.loopMessage();
+return winform;

@@ -1,51 +1,98 @@
+import fonts.icomoon;
 import fonts.fontAwesome; // 图标字体
 import win.ui;
+import win.ui.statusbar;
+import win.ui.simpleWindow;
+import win.dlg.message;
+import fsys.config;
 /*DSG{{*/
-mainForm = win.form(text="横版导航";right=679;bottom=447;bgcolor=16777215;border="none")
+mainForm = win.form(text="KitX-Git";right=695;bottom=487;bgcolor=16777215;border="none")
 mainForm.add(
 caption={cls="bkplus";text="KitX-Git";left=48;top=8;right=136;bottom=40;color=16777215;dl=1;dt=1;font=LOGFONT(h=-21);z=4};
-custom={cls="custom";left=0;top=48;right=680;bottom=448;bgcolor=16777215;db=1;dl=1;dr=1;dt=1;z=1};
-navFirst={cls="plus";text="主页";left=144;top=8;right=232;bottom=48;align="left";color=16777215;dl=1;dt=1;font=LOGFONT(h=-16);iconStyle={align="left";font=LOGFONT(h=-19;name='FontAwesome');padding={left=12;top=4}};iconText='\uF00A';notify=1;paddingLeft=1;paddingRight=1;paddingTop=3;textPadding={left=39;bottom=1};x=0.5;y=0.2;z=3};
-navHelp={cls="plus";text="帮助";left=368;top=8;right=456;bottom=48;align="left";color=16777215;dl=1;dt=1;font=LOGFONT(h=-16);iconStyle={align="left";font=LOGFONT(h=-19;name='FontAwesome');padding={left=12;top=4}};iconText='\uF06A';notify=1;paddingLeft=1;paddingRight=1;paddingTop=3;textPadding={left=39;bottom=1};x=0.5;y=0.2;z=6};
-navSetting={cls="plus";text="设置";left=256;top=8;right=344;bottom=48;align="left";color=16777215;dl=1;dt=1;font=LOGFONT(h=-16);iconStyle={align="left";font=LOGFONT(h=-19;name='FontAwesome');padding={left=12;top=4}};iconText='\uF0AD';notify=1;paddingLeft=1;paddingRight=1;paddingTop=3;textPadding={left=39;bottom=1};x=0.5;y=0.2;z=5};
-plus={cls="plus";left=8;top=8;right=40;bottom=40;background="\icon.ico";notify=1;z=7};
-titleBar={cls="bkplus";left=0;top=0;right=680;bottom=48;bgcolor=7105791;dl=1;dr=1;dt=1;z=2}
+custom={cls="custom";left=8;top=56;right=688;bottom=456;bgcolor=16777215;db=1;dl=1;dr=1;dt=1;z=1};
+navGenerator={cls="plus";text="生成";left=256;top=8;right=344;bottom=48;align="left";color=16777215;dl=1;dt=1;font=LOGFONT(h=-16);iconStyle={align="left";font=LOGFONT(h=-19;name='icomoon');padding={left=12;top=4}};iconText='\uE901';notify=1;paddingLeft=1;paddingRight=1;paddingTop=3;textPadding={left=39;bottom=1};x=0.5;y=0.2;z=5};
+navHelp={cls="plus";text="帮助";left=480;top=8;right=568;bottom=48;align="left";color=16777215;dl=1;dt=1;font=LOGFONT(h=-16);iconStyle={align="left";font=LOGFONT(h=-19;name='icomoon');padding={left=12;top=4}};iconText='\uEA0C';notify=1;paddingLeft=1;paddingRight=1;paddingTop=3;textPadding={left=39;bottom=1};x=0.5;y=0.2;z=8};
+navRepo={cls="plus";text="主页";left=144;top=8;right=232;bottom=48;align="left";color=16777215;dl=1;dt=1;font=LOGFONT(h=-16);iconStyle={align="left";font=LOGFONT(h=-19;name='icomoon');padding={left=12;top=4}};iconText='\uEAB0';notify=1;paddingLeft=1;paddingRight=1;paddingTop=3;textPadding={left=39;bottom=1};x=0.5;y=0.2;z=3};
+navSetting={cls="plus";text="设置";left=368;top=8;right=456;bottom=48;align="left";color=16777215;dl=1;dt=1;font=LOGFONT(h=-16);iconStyle={align="left";font=LOGFONT(h=-19;name='icomoon');padding={left=12;top=4}};iconText='\uE991';notify=1;paddingLeft=1;paddingRight=1;paddingTop=3;textPadding={left=39;bottom=1};x=0.5;y=0.2;z=6};
+plus={cls="plus";left=8;top=8;right=40;bottom=40;background="\res\icon.ico";dl=1;dt=1;notify=1;z=7};
+titleBar={cls="bkplus";left=0;top=0;right=696;bottom=48;bgcolor=14772545;dl=1;dr=1;dt=1;z=2};
+versionTxt={cls="static";text="version";left=600;top=24;right=688;bottom=40;align="right";center=1;color=16777215;dr=1;dt=1;font=LOGFONT(h=-13);notify=1;transparent=1;z=9}
 )
 /*}}*/
 
 // 开始/关闭按钮
-import win.ui.simpleWindow;
-win.ui.simpleWindow(mainForm);
+win.ui.simpleWindow(mainForm,,30,20);
 
 import win.ui.tabs;
 var tbs = win.ui.tabs( // 定义导航栏
-	mainForm.navFirst,
+	mainForm.navRepo,
+	mainForm.navGenerator,
 	mainForm.navSetting,
 	mainForm.navHelp
 );
 
 tbs.skin({ // 导航栏显示效果
 	foreground={
-		active=0xFFFFFFFF;
+		//active=0xFFFFFFFF;
 		default=0x00FFFFFF;
-		hover=0x38FFFFFF
+		hover=0x38FFFFFF;
 	};
 	color={
 		default=0xFFFFFFFF;
 	};
 	checked={
 		foreground={default=0xFFFFFFFF;};
-		color={default=0xffcd0000;};
+		color={default=0xFF1E90FF;};
 	}
 })
 
 // 定义页面
-tbs.loadForm(1,"\dlg\pages\home.aardio");
-tbs.loadForm(2,"\dlg\pages\setting.aardio");
-tbs.loadForm(3,"\dlg\pages\help.aardio");
+tbs.loadForm(1,"\dlg\pages\repo.aardio");
+tbs.loadForm(2,"\dlg\pages\generator.aardio");
+tbs.loadForm(3,"\dlg\pages\setting.aardio");
+tbs.loadForm(4,"\dlg\pages\help.aardio");
 
-tbs.selIndex = 1; // 默认页面
+// 配置文件
+config  = fsys.config("/.kitx-git/config/");
+
+if (config.default.run == null) { // 第一次启动
+	config.default.run = true;
+	if (mainForm.msgAsk("您是第一次启动 KitX-Git 您要启动配置页面吗？")) {
+		tbs.selIndex = 3;
+	} else {
+		tbs.selIndex = 1; // 默认页面
+	}
+} else {
+	tbs.selIndex = 1; // 默认页面
+}
+
+// 状态栏
+var statusbar = win.ui.statusbar(mainForm);
+statusbar.setText("欢迎使用 KitX-Git 工具! ");
+
+// 版本字符框
+if (!_STUDIO_INVOKED) { // 运行时检测
+	// 发布的 exe
+	import io;
+	import fsys.version;
+	mainForm.versionTxt.text = "v" + tostring(fsys.version.getInfo(io._exepath).productVersion);
+} else {
+	// ide 内部
+	import ide;
+	mainForm.versionTxt.text = "v" + ide.getProjectProperty("ProductVersion") + " in IDE";
+}
+
+
+/*
+import inet.downBox;
+import inet.http;
+htp = inet.http();
+data = htp.get("https://github.moeyy.xyz/https://github.com/Crequency/KitX/raw/main/.gitmodules");
+mainForm.msgbox(data);
+box = inet.downBox();
+box.download("https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js", "\a.js");
+*/
+
 
 mainForm.show();
-
 return win.loopMessage();

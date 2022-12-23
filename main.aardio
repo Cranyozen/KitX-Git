@@ -2,4 +2,5 @@
 KitX-Git 程序入口
 */
 import win.ui;
+import config;
 win.loadForm("\dlg\main.aardio").doModal()

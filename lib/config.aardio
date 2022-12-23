@@ -1,13 +1,26 @@
 //config 配置文件
 import fsys.config;
-config  = fsys.config("/.KitX-Git/config/"); 
-//config  = fsys.config( io.appData("/软件作者/应用程序名/") ); 
+config  = fsys.config("/.kitx-git/config/");
+//config  = fsys.config( io.appData("/软件作者/应用程序名/") );
 
 //不需要序列化的配置名字前请添加下划线
 namespace config {
 	__appName = "KitX-Git";
 	__website = "https://github.com/LYF511/KitX-Git";
 }
+
+config.default.load();
+
+addConfig = function(conf, value){
+	if (conf == null) {
+		conf = value
+	}
+}
+
+
+//config.urls.githubUrl = "https://github.com/";
+addConfig(config.urls.githubUrl, "https://github.com/");
+config.urls.save();
 
 /**intellisense(config)
 __appName = 应用程序名

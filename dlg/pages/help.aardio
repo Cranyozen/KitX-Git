@@ -1,8 +1,14 @@
+import fonts.icomoon;
+import fonts.fontAwesomeDlg;
 import win.ui;
 import fonts.fontAwesome;
 /*DSG{{*/
-var winform = win.form(text="wubiLex - 帮助";right=679;bottom=399;bgcolor=16777215)
-winform.add()
+var winform = win.form(text="Help";right=679;bottom=399;bgcolor=16777215)
+winform.add(
+infoTxt={cls="static";text="infos";left=352;top=176;right=560;bottom=264;center=1;font=LOGFONT(h=-16);notify=1;transparent=1;z=3};
+plus2={cls="plus";left=80;top=88;right=280;bottom=288;background="\res\icon.ico";notify=1;z=1};
+static={cls="static";text="KitX-Git";left=320;top=152;right=568;bottom=192;align="center";center=1;font=LOGFONT(h=-27);notify=1;transparent=1;z=2}
+)
 /*}}*/
 
 winform.show();

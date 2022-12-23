@@ -1,13 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<project ver="10" name="KitX-Git" libEmbed="true" icon="icon.ico" ui="win" output="KitX-Git.exe" CompanyName="Github@LYF511" FileDescription="KitX-Git 小工具" LegalCopyright="Copyright (C) Github@LYF511 2022" ProductName="KitX-Git" InternalName="KitX-Git" FileVersion="0.0.1.02" ProductVersion="0.0.1.02" publishDir="/dist/" dstrip="false" local="false" ignored="false">
+<project ver="10" name="KitX-Git" libEmbed="true" icon="res\icon.ico" ui="win" output="KitX-Git.exe" CompanyName="Github@LYF511" FileDescription="KitX-Git 小工具" LegalCopyright="Copyright (C) Github@LYF511 2022" ProductName="KitX-Git" InternalName="KitX-Git" FileVersion="0.0.1.06" ProductVersion="0.0.1.06" publishDir="/dist/" dstrip="false" local="false" ignored="false">
 	<file name="main.aardio" path="main.aardio" comment="main.aardio"/>
-	<folder name="资源文件" path="res" embed="true" local="false" ignored="false"/>
+	<folder name="资源文件" path="res" embed="true" local="false" ignored="false">
+		<file name="icon.ico" path="res\icon.ico" comment="res\icon.ico"/>
+	</folder>
 	<folder name="窗体文件" path="dlg" comment="目录" embed="true" local="false" ignored="false">
 		<file name="main.aardio" path="dlg\main.aardio" comment="dlg\main.aardio"/>
 		<folder name="pages" path="dlg\pages" comment="dlg\pages" local="false" embed="false" ignored="false">
-			<file name="home.aardio" path="dlg\pages\home.aardio" comment="dlg\pages\first.aardio"/>
+			<file name="repo.aardio" path="dlg\pages\repo.aardio" comment="dlg\pages\first.aardio"/>
 			<file name="help.aardio" path="dlg\pages\help.aardio" comment="dlg\pages\help.aardio"/>
 			<file name="setting.aardio" path="dlg\pages\setting.aardio" comment="dlg\pages\setting.aardio"/>
+			<file name="generator.aardio" path="dlg\pages\generator.aardio" comment="dlg\pages\generator.aardio"/>
 		</folder>
 	</folder>
 </project>
