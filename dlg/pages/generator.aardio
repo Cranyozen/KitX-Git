@@ -1,12 +1,175 @@
 import win.ui;
+import fsys;
+import fsys.dlg;
+import fsys.dlg.dir;
+import win.clip;
 /*DSG{{*/
 var winform = win.form(text="Generator";right=679;bottom=399;bgcolor=16777215)
 winform.add(
-combobox={cls="combobox";left=0;top=0;right=64;bottom=24;edge=1;items={};mode="dropdown";z=1};
-edit={cls="edit";text="Edit";left=64;top=0;right=680;bottom=24;edge=1;z=2}
+copyBtn={cls="button";text="复制";left=560;top=368;right=680;bottom=400;db=1;dr=1;font=LOGFONT(h=-16);z=8};
+downBtn={cls="button";text='\u2228';left=152;top=368;right=200;bottom=400;db=1;dl=1;font=LOGFONT(h=-19);z=6};
+fileBtn={cls="button";text="文件";left=624;top=40;right=672;bottom=64;z=11};
+folderBtn={cls="button";text="文件夹";left=624;top=72;right=672;bottom=96;z=12};
+reduceBtn={cls="button";text="-";left=0;top=368;right=48;bottom=400;db=1;dl=1;font=LOGFONT(h=-19);z=4};
+resultEdt={cls="edit";left=208;top=232;right=680;bottom=360;bgcolor=16777215;db=1;dl=1;dr=1;dt=0.58;edge=1;font=LOGFONT(h=-16);multiline=1;readonly=1;z=7};
+scopeEdt={cls="edit";left=208;top=40;right=616;bottom=96;db=0.76;dl=1;dr=1;dt=1;edge=1;font=LOGFONT(h=-16);multiline=1;z=9};
+subjectEdt={cls="edit";left=208;top=104;right=680;bottom=224;db=0.44;dl=1;dr=1;dt=0.26;edge=1;font=LOGFONT(h=-16);multiline=1;z=2};
+tipTxt={cls="richedit";text="<EMOJI> <TYPE>(<SCOPE>): <SUBJECT>";left=208;top=8;right=680;bottom=40;align="center";bgcolor=16777215;dl=1;dr=1;dt=1;font=LOGFONT(h=-16);readonly=1;z=10};
+typeLst={cls="listbox";left=0;top=40;right=200;bottom=360;db=1;dl=1;dt=1;edge=1;font=LOGFONT(h=-16;name='Segoe UI Emoji');integralHeight=0;items={};z=3};
+typeSelectionComb={cls="combobox";left=0;top=0;right=200;bottom=24;dl=1;dt=1;edge=1;font=LOGFONT(h=-16;name='Segoe UI Emoji');items={};mode="dropdownlist";z=1};
+upBtn={cls="button";text='\u2227';left=96;top=368;right=144;bottom=400;db=1;dl=1;font=LOGFONT(h=-19);z=5}
 )
 /*}}*/
 
+// 颜色常量 Blue Green Red
+var C_RED = 0x0000FF; // 红色
+var C_GREEN = 0x00FF00; // 绿色
+var C_GRAY = 0x808080; // 灰色
+
+/*
+// For debug
+if (_STUDIO_INVOKED) {
+	import io;
+	io.open();
+}
+*/
+
+// 由于编辑器原因，下方的字符串不方便编辑，最好使用外置编辑器
+var emojis = {{"💾";"Feat"};{"🔧";"Fix"};{"📄";"Docs"};{"🎇";"Style"};{"🧩";"Refactor"};{"✔️";"Test"};{"❌";"Test"};{"📝";"Chore"};{"📦";"Struct"};{"🐛";"Bug"}};
+var selectType = {}; // 选择列表
+
+// 初始化下拉框
+for (i, each in emojis) {
+	winform.typeSelectionComb.add(each[1] + " - " + each[2]); // aardio 中，数组索引从 1 开始
+}
+
+/// 更新列表
+updateList = function(){
+	winform.typeLst.clear();
+	for (i, each in selectType){
+		winform.typeLst.add(
+			emojis[each][1] + " - " + emojis[each][2]
+		);
+	}
+}
+
+/// 列表选择
+winform.typeSelectionComb.onListChange = function(id, event){
+	if (winform.typeSelectionComb.selIndex != 0) {
+		setC1(C_GREEN);
+		table.push(selectType, winform.typeSelectionComb.selIndex);
+		selectType = table.unique(selectType);
+		updateList();
+		generateText();
+	}
+}
+
+/// "-" 按钮被点击
+winform.reduceBtn.oncommand = function(id, event){
+	var index = winform.typeLst.selIndex;
+	if (index != 0) {
+		table.remove(selectType, index);
+		updateList();
+		if (index > #selectType) {
+			winform.typeLst.selIndex = index - 1;
+		} else {
+			winform.typeLst.selIndex = index; // 跟踪焦点
+		}
+		generateText();
+		if (#selectType == 0) setC1(C_RED);
+	}
+}
+
+/// "∧" 按钮被点击
+winform.upBtn.oncommand = function(id, event){
+	var index = winform.typeLst.selIndex;
+	if (index > 1) {
+		var t = selectType[index-1];
+		selectType[index-1] = selectType[index];
+		selectType[index] = t;
+		updateList();
+		winform.typeLst.selIndex = index - 1; // 跟踪焦点
+		generateText();
+	}
+}
+
+/// "∨" 按钮被点击
+winform.downBtn.oncommand = function(id,event){
+	var index = winform.typeLst.selIndex;
+	if (index != 0 && index != #selectType) {
+		var t = selectType[index+1];
+		selectType[index+1] = selectType[index];
+		selectType[index] = t;
+		updateList();
+		winform.typeLst.selIndex = index + 1; // 跟踪焦点
+		generateText();
+	}
+}
+
+/// "复制" 按钮被点击
+winform.copyBtn.oncommand = function(id, event){
+	win.clip.write(winform.resultEdt.text);
+}
+
+/// 文本更改
+winform.subjectEdt.onChange = λ () generateText();
+winform.scopeEdt.onChange = λ () generateText();
+
+/// 生成文字
+generateText = function () {
+	var text = "";
+	var typeText = "";
+	for (i, each in selectType){
+		text = text + emojis[each][1] + " ";
+		typeText = typeText + emojis[each][2] + ", ";
+	}
+	io.print(winform.scopeEdt.text, winform.subjectEdt.text, text, typeText);
+	text = text ++ string.trimright(typeText, ", ");
+	if (winform.scopeEdt.text == "") setC2(C_GRAY) else {
+		setC2(C_GREEN);
+		text = text + "(" + tostring(winform.scopeEdt.text) + "): ";
+	}
+	if (winform.subjectEdt.text == "") setC3(C_RED) else {
+		setC3(C_GREEN);
+		text = text ++ tostring(winform.subjectEdt.text);
+	}
+	winform.resultEdt.text = text;
+}
+
+/// <EMOJI> <TYPE>(<SCOPE>): <SUBJECT>
+setC1 = λ (color) setColor(1, 14, color);
+
+setC2 = λ (color) setColor(15, 23, color);
+
+setC3 = λ (color) setColor(26, 34, color);
+
+setColor = function (startSel, endSel, color) {
+	winform.tipTxt.setsel(startSel, endSel);
+	winform.tipTxt.setSelCharformat(textColor=color);
+	winform.tipTxt.deselect();
+}
+
+winform.fileBtn.oncommand = function(id,event){
+	var files = fsys.dlg.openEx(, "选择一个或多个文件", "/", winform);
+	for (i, each in files) {
+		winform.scopeEdt.text = winform.scopeEdt.text + fsys.getFileName(each) + ", ";
+	}
+	winform.scopeEdt.onChange();
+}
+
+winform.folderBtn.oncommand = function(id,event){
+	var files = fsys.dlg.dir("/", winform, "选择一个文件夹", , , true);
+	for (i, each in files) {
+		winform.scopeEdt.text = winform.scopeEdt.text + fsys.getFileName(each) + ", ";
+	}
+	winform.scopeEdt.onChange();
+}
+
 winform.show();
+
+setC1(C_RED);
+setC2(C_GRAY);
+setC3(C_RED);
+
 win.loopMessage();
 return winform;
