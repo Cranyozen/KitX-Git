@@ -127,8 +127,9 @@ generateText = function () {
 	text = text ++ string.trimright(typeText, ", ");
 	if (winform.scopeEdt.text == "") setC2(C_GRAY) else {
 		setC2(C_GREEN);
-		text = text + "(" + tostring(winform.scopeEdt.text) + "): ";
+		text = text + "(" + tostring(winform.scopeEdt.text) + ")";
 	}
+	text = text + ": ";
 	if (winform.subjectEdt.text == "") setC3(C_RED) else {
 		setC3(C_GREEN);
 		text = text ++ tostring(winform.subjectEdt.text);
